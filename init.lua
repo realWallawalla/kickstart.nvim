@@ -554,7 +554,21 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
-        --
+        -- Install pip install "python-lsp-server[all]"
+        pylsp = {
+          plugins = {
+            -- Disable (redundant with flake8)
+            pycodestyle = { enabled = false },
+            mccabe = { enabled = false },
+            pyflakes = { enabled = false },
+
+            --enable
+            flake8 = { enabled = true },
+            pylint = { enabled = true },
+            mypy = { enabled = true },
+            yapf = { enabled = true },
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
