@@ -23,10 +23,89 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+
+    'nvim-telescope/telescope-dap.nvim', -- telescope integration with dap
+
+    'theHamsta/nvim-dap-virtual-text', -- inline variable text while debugging
   },
-  config = function()
+  opts = {
+    controls = {
+      element = 'repl',
+      enabled = false,
+      icons = {
+        disconnect = '',
+        pause = '',
+        play = '',
+        run_last = '',
+        step_back = '',
+        step_into = '',
+        step_out = '',
+        step_over = '',
+        terminate = '',
+      },
+    },
+    element_mappings = {},
+    expand_lines = true,
+    floating = {
+      border = 'single',
+      mappings = {
+        close = { 'q', '<Esc>' },
+      },
+    },
+    force_buffers = true,
+    icons = {
+      collapsed = '',
+      current_frame = '',
+      expanded = '',
+    },
+    layouts = {
+      {
+        elements = {
+          {
+            id = 'scopes',
+            size = 0.50,
+          },
+          {
+            id = 'stacks',
+            size = 0.30,
+          },
+          {
+            id = 'watches',
+            size = 0.10,
+          },
+          {
+            id = 'breakpoints',
+            size = 0.10,
+          },
+        },
+        size = 40,
+        position = 'left', -- Can be "left" or "right"
+      },
+      {
+        elements = {
+          'repl',
+          'console',
+        },
+        size = 10,
+        position = 'bottom', -- Can be "bottom" or "top"
+      },
+    },
+    mappings = {
+      edit = 'e',
+      expand = { '<CR>', '<2-LeftMouse>' },
+      open = 'o',
+      remove = 'd',
+      repl = 'r',
+      toggle = 't',
+    },
+    render = {
+      indent = 1,
+      max_value_lines = 100,
+    },
+  },
+  config = function(_, opts)
     local dap = require 'dap'
-    local dapui = require 'dapui'
+    require('dapui').setup(opts)
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
@@ -57,34 +136,45 @@ return {
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = 'Debug: Set Breakpoint' })
 
-    -- Dap UI setup
-    -- For more information, see |:help nvim-dap-ui|
-    dapui.setup {
-      -- Set icons to characters that are more likely to work in every terminal.
-      --    Feel free to remove or use ones that you like more! :)
-      --    Don't feel like these are good choices.
-      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-      controls = {
-        icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
-        },
+    dap.listeners.after.event_initialized['dapui_config'] = function()
+      require('dapui').open()
+    end
+
+    dap.listeners.before.event_terminated['dapui_config'] = function()
+      -- Commented to prevent DAP UI from closing when unit tests finish
+      -- require('dapui').close()
+    end
+
+    dap.listeners.before.event_exited['dapui_config'] = function()
+      -- Commented to prevent DAP UI from closing when unit tests finish
+      -- require('dapui').close()
+    end
+
+    -- Add dap configurations based on your language/adapter settings
+    -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
+    dap.configurations.java = {
+      {
+        name = 'Debug Launch (2GB)',
+        type = 'java',
+        request = 'launch',
+        vmArgs = '' .. '-Xmx2g ',
+      },
+      {
+        name = 'Debug Attach (8000)',
+        type = 'java',
+        request = 'attach',
+        hostName = '127.0.0.1',
+        port = 8000,
+      },
+      {
+        name = 'Debug Attach (5005)',
+        type = 'java',
+        request = 'attach',
+        hostName = '127.0.0.1',
+        port = 5005,
       },
     }
-
-    -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
-
-    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
+    vim.keymap.set('n', '<F7>', require('dapui').toggle, { desc = 'Debug: See last session result.' })
 
     -- Install golang specific config
     require('dap-go').setup {
