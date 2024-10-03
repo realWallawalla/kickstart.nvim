@@ -1,3 +1,4 @@
+-- install brew install clang-format for c++
 return {
   -- Formatters
   'jose-elias-alvarez/null-ls.nvim',
@@ -11,8 +12,8 @@ return {
         -- Sources are "ensure_installed" with mason in lua/plugins/lsp.lua
         nls.builtins.formatting.stylua,
         nls.builtins.formatting.black,
+        nls.builtins.formatting.clang_format,
         --  nls.builtins.formatting.shfmt,
-        nls.builtins.formatting.sql_formatter,
         --    nls.builtins.formatting.prettierd,
         -- nls.builtins.formatting.djlint,
       },

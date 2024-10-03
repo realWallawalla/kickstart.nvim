@@ -6,3 +6,7 @@ command Nt Neotree
 set rtp+=~/.fzf
 "case insensitivy when searching / ? etc" 
 set smartcase
+"tab"
+set tabstop=4
+set shiftwidth=4
+set expandtab

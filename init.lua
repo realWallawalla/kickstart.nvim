@@ -94,9 +94,8 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -580,7 +579,7 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        tsserver = {},
+        -- tsserver = {},
         -- Install pip install "python-lsp-server[all]"
         pylsp = {
           plugins = {
@@ -853,11 +852,12 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
+
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'markdown_inline', 'python' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -868,6 +868,7 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      -- below is for plugin molten
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
@@ -883,6 +884,56 @@ require('lazy').setup({
       --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    end,
+  },
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    dependencies = { 'nvim-treesitter' },
+    config = function()
+      require('nvim-treesitter.configs').setup {
+        sync_install = false,
+        ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+        -- Autoinstall languages that are not installed
+        auto_install = true,
+        ignore_install = {},
+
+        -- ... other ts config
+        textobjects = {
+          move = {
+            enable = true,
+            set_jumps = false, -- you can change this if you want.
+            goto_next_start = {
+              --- ... other keymaps
+              [']b'] = { query = '@code_cell.inner', desc = 'next code block' },
+            },
+            goto_previous_start = {
+              --- ... other keymaps
+              ['[b'] = { query = '@code_cell.inner', desc = 'previous code block' },
+            },
+          },
+          select = {
+            enable = true,
+            lookahead = true, -- you can change this if you want
+            keymaps = {
+              --- ... other keymaps
+              ['ib'] = { query = '@code_cell.inner', desc = 'in block' },
+              ['ab'] = { query = '@code_cell.outer', desc = 'around block' },
+            },
+          },
+          swap = { -- Swap only works with code blocks that are under the same
+            -- markdown header
+            enable = true,
+            swap_next = {
+              --- ... other keymap
+              ['<leader>sbl'] = '@code_cell.outer',
+            },
+            swap_previous = {
+              --- ... other keymap
+              ['<leader>sbh'] = '@code_cell.outer',
+            },
+          },
+        },
+      }
     end,
   },
 

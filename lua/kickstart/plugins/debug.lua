@@ -44,6 +44,7 @@ return {
         'delve',
         'java-debug-adapter',
         'java-test',
+        'codelldb',
       },
     }
 
