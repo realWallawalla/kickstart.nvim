@@ -12,10 +12,9 @@ return {
         -- Sources are "ensure_installed" with mason in lua/plugins/lsp.lua
         nls.builtins.formatting.stylua,
         nls.builtins.formatting.black,
-        nls.builtins.formatting.clang_format,
-        --  nls.builtins.formatting.shfmt,
-        --    nls.builtins.formatting.prettierd,
-        -- nls.builtins.formatting.djlint,
+        nls.builtins.formatting.shfmt,
+        nls.builtins.formatting.prettierd,
+        nls.builtins.formatting.isort,
       },
       -- configure format on save
       on_attach = function(current_client, bufnr)
