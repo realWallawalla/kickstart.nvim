@@ -64,7 +64,7 @@ local config = {
   settings = {
     java = {
       -- TODO Replace this with the absolute path to your main java version (JDK 17 or higher)
-      home = '/Users/timon.sarakinis/.jenv/versions/17.0.13/',
+      home = '/home/s0001972/.jenv/versions/21',
       eclipse = {
         downloadSources = true,
       },
@@ -75,13 +75,13 @@ local config = {
         runtimes = {
           {
             name = 'JavaSE-17',
-            --path = '/usr/lib/jvm/java-17-openjdk-amd64',
-            path = '/usr/local/Cellar/openjdk@17/17.0.13/',
+            path = '/usr/lib/jvm/java-17-openjdk-amd64',
+            --path = '/usr/local/Cellar/openjdk@17/17.0.13/',
           },
           {
             name = 'JavaSE-21',
-            --path = '/usr/lib/jvm/java-21-openjdk-amd64',
-            path = '/usr/local/Cellar/openjdk@21/21.0.5/',
+            path = '/usr/lib/jvm/java-21-openjdk-amd64',
+            --path = '/usr/local/Cellar/openjdk@21/21.0.5/',
           },
         },
       },
