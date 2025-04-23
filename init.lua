@@ -505,8 +505,8 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
         -- Install pip install "python-lsp-server[all]"
+        ts_ls = { filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' } },
         pylsp = {
           plugins = {
             -- Disable (redundant with flake8)
@@ -539,6 +539,9 @@ require('lazy').setup({
         },
         jdtls = {},
         bashls = {},
+        svelte = {
+          filetypes = { 'svelte' },
+        },
       }
 
       local formatters = {
