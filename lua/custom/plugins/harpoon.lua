@@ -27,29 +27,29 @@ return {
         :find()
     end
 
+    --KEYMAPS
     vim.keymap.set('n', '<leader>h', function()
       toggle_telescope(harpoon:list())
     end, { desc = 'Open harpoon window' })
 
-    --KEYMAPS
     --marks file, appends to harpoon list
     vim.keymap.set('n', '<leader>ha', function()
-      harpoon:list():append()
+      harpoon:list():add()
     end)
     vim.keymap.set('n', '<leader>hq', function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end)
 
-    vim.keymap.set('n', '<leader>hh', function()
+    vim.keymap.set('n', '<leader>h1', function()
       harpoon:list():select(1)
     end)
-    vim.keymap.set('n', '<leader>hj', function()
+    vim.keymap.set('n', '<leader>h2', function()
       harpoon:list():select(2)
     end)
-    vim.keymap.set('n', '<leader>hf', function()
+    vim.keymap.set('n', '<leader>h3', function()
       harpoon:list():select(3)
     end)
-    vim.keymap.set('n', '<leader>hg', function()
+    vim.keymap.set('n', '<leader>h4', function()
       harpoon:list():select(4)
     end)
 
