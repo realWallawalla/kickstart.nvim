@@ -1,5 +1,4 @@
 -- ctrl + b = Neotree toggle
-vim.keymap.set('n', '<C-b>', '<Cmd>Neotree toggle<CR>')
 vim.keymap.set('n', '<leader>tc', function()
   if vim.bo.filetype == 'java' then
     require('jdtls').test_class()

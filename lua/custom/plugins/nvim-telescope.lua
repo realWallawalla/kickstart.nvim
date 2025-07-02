@@ -51,6 +51,17 @@ return { -- Fuzzy Finder (files, lsp, etc)
       --  All the info you're looking for is in `:help telescope.setup()`
       --
       defaults = {
+        vimgrep_arguments = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '--hidden',
+          '--no-ignore', -- Or '-uu' for shorthand
+        },
         mappings = {
           i = {
             ['<C-y>'] = require('telescope.actions').select_default,
@@ -94,7 +105,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>bd', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { desc = '[B]rowse [D]irectory' })
 
     vim.keymap.set('n', '<leader>sf', function()
-      builtin.find_files { hidden = true }
+      builtin.find_files { hidden = true, no_ignore = true }
     end, { desc = '[S]earch [F]iles' })
 
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })

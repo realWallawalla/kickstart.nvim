@@ -3,6 +3,7 @@ local vimrc = vim.fn.stdpath 'config' .. '/vimrc.vim'
 vim.cmd.source(vimrc)
 -- read keybinds
 require 'keybindings'
+
 --[[
 
 =====================================================================
@@ -549,13 +550,14 @@ require('lazy').setup({
         'shfmt',
         'isort',
         'black',
-        'prettierd',
+        'prettier',
       }
 
       local linters = {
         'shellcheck',
         'eslint_d',
         'pylint',
+        'markdownlint',
       }
 
       -- Ensure the servers and tools above are installed
@@ -623,7 +625,17 @@ require('lazy').setup({
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        javascriptreact = { 'prettier' },
+        typescriptreact = { 'prettier' },
+        json = { 'prettier' },
+        html = { 'prettier' },
+        svelte = { 'prettier' },
+        yaml = { 'prettier' },
+        markdown = { 'prettier' },
+        css = { 'prettier' },
+        graphql = { 'prettier' },
       },
     },
   },
