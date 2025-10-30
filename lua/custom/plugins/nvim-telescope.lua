@@ -51,6 +51,21 @@ return { -- Fuzzy Finder (files, lsp, etc)
       --  All the info you're looking for is in `:help telescope.setup()`
       --
       defaults = {
+        file_ignore_patterns = {
+          '.git',
+          -- npm
+          'node_modules',
+          '.next',
+          -- gradle
+          'build/classes',
+          'build/generated',
+          'build/tmp',
+          'build/resources',
+          'build/libs',
+          'bin',
+          -- maven
+          'target/classes',
+        },
         vimgrep_arguments = {
           'rg',
           '--color=never',
