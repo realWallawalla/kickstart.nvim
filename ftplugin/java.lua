@@ -25,7 +25,16 @@ local bundles = {
 }
 
 -- Needed for running/debugging unit tests
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. '/.local/share/nvim/mason/share/java-test/*.jar', 1), '\n'))
+-- Only include actual OSGi plugin bundles (not runtime dependencies)
+local java_test_path = home .. '/.local/share/nvim/mason/share/java-test'
+local java_test_bundles = vim.split(vim.fn.glob(java_test_path .. '/com.microsoft.java.test.plugin*.jar', 1), '\n')
+vim.list_extend(java_test_bundles, vim.split(vim.fn.glob(java_test_path .. '/org.eclipse.jdt.junit*.jar', 1), '\n'))
+vim.list_extend(
+  bundles,
+  vim.tbl_filter(function(jar)
+    return jar ~= ''
+  end, java_test_bundles)
+)
 
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
@@ -102,7 +111,7 @@ local config = {
         enabled = true,
         -- Formatting works by default, but you can refer to a specific file/URL if you choose
         settings = {
-          url = 'https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml',
+          url = home .. '/.local/share/nvim/google-java-style.xml',
           profile = 'GoogleStyle',
         },
       },

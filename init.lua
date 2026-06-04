@@ -523,7 +523,7 @@ require('lazy').setup({
 
             --enable
             flake8 = { enabled = false },
-            pylint = { enabled = true },
+            pylint = { enabled = false },
             mypy = { enabled = false },
             yapf = { enabled = false },
             black = { enabled = true },

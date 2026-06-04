@@ -34,7 +34,7 @@
 
 return {
   'benlubas/molten-nvim',
-  version = '^1.0.0', -- use version <2.0.0 to avoid breaking changes
+  --version = '^1.0.0', -- use version <2.0.0 to avoid breaking changes
   dependencies = { '3rd/image.nvim' },
   build = ':UpdateRemotePlugins',
   init = function()
@@ -67,6 +67,7 @@ return {
 
     -- Cell management
     vim.keymap.set('n', '<localleader>md', ':MoltenDelete<CR>', { desc = 'Molten: delete cell', silent = true })
+    vim.keymap.set('n', '<localleader>my', ':MoltenYankOutput!<CR>', { desc = 'Molten: yank output to clipboard', silent = true })
     vim.keymap.set('n', '<localleader>ms', ':MoltenSave<CR>', { desc = 'Molten: save outputs', silent = true })
     vim.keymap.set('n', '<localleader>mL', ':MoltenLoad<CR>', { desc = 'Molten: load outputs', silent = true })
   end,

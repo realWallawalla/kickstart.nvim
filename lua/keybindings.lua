@@ -10,6 +10,7 @@ vim.keymap.set('n', '<leader>tm', function()
     require('jdtls').test_nearest_method()
   end
 end)
--- new line from normal mode. add above or below cursor
---vim.keymap.set('n', 'oo', 'o<Esc>k')
---vim.keymap.set('n', 'OO', 'O<Esc>j')
+
+-- Prettify JSON with jq
+vim.keymap.set('n', '<leader>jq', ':%!jq .<CR>', { desc = 'Prettify JSON' })
+vim.keymap.set('v', '<leader>jq', ":'<,'>!jq .<CR>", { desc = 'Prettify JSON selection' })
