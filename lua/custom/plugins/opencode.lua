@@ -1,14 +1,29 @@
 return {
   'NickvanDyke/opencode.nvim',
+  version = '*',
   dependencies = {
     -- Recommended for `ask()` and `select()`.
     -- Required for default `toggle()` implementation.
     { 'folke/snacks.nvim', opts = { input = {}, picker = {}, terminal = {} } },
   },
   config = function()
+    local opencode_cmd = 'opencode --port'
+    ---@type snacks.terminal.Opts
+    local snacks_terminal_opts = {
+      win = {
+        position = 'right',
+        enter = false,
+      },
+    }
+
     ---@type opencode.Opts
     vim.g.opencode_opts = {
       -- Your configuration, if any — see `lua/opencode/config.lua`, or "goto definition".
+      server = {
+        start = function()
+          require('snacks.terminal').open(opencode_cmd, snacks_terminal_opts)
+        end,
+      },
     }
 
     -- Required for `opts.auto_reload`.
@@ -25,7 +40,7 @@ return {
       require('opencode').prompt '@this'
     end, { desc = 'Add to opencode' })
     vim.keymap.set('n', '<leader>o.', function()
-      require('opencode').toggle()
+      require('snacks.terminal').toggle(opencode_cmd, snacks_terminal_opts)
     end, { desc = 'Toggle opencode' })
     vim.keymap.set('n', '<leader>of', function()
       require('opencode').command 'messages_half_page_up'
