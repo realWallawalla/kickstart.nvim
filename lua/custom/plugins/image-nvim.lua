@@ -1,9 +1,6 @@
---to make it work: brew install luajit
--- luarocks --local --lua-version=5.1 install magick
+-- Requires the ImageMagick `magick` CLI on PATH (e.g. brew install imagemagick)
 return {
   '3rd/image.nvim',
-  version = '1.1.0',
-  dependencies = { 'luarocks.nvim' },
   config = function()
     -- default config
     require('image').setup {
